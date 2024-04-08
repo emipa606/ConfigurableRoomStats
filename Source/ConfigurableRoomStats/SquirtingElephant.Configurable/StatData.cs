@@ -6,26 +6,24 @@ namespace SquirtingElephant.ConfigurableRoomStats;
 
 public class StatData : IExposable
 {
-    private const string PREFIX = "SECRS_";
-
-    private static readonly List<(float, float)> MinMaxConsts = new List<(float, float)>
-    {
+    private static readonly List<(float, float)> MinMaxConsts =
+    [
         (2f, 2500f),
         (-1000f, 1000f),
         (1f, 1000000f),
         (1f, 2500f),
         (-5f, 1f)
-    };
+    ];
+
+    public readonly float MaxValue;
+
+    public readonly float MinValue;
+
+    public readonly List<float> Presets;
 
     public float CustomPreset1;
 
     public float CustomPreset2;
-
-    public float MaxValue;
-
-    public float MinValue;
-
-    public List<float> Presets;
 
     public float Value;
 

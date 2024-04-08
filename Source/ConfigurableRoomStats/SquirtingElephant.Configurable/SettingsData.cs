@@ -28,20 +28,18 @@ public class SettingsData : ModSettings
         {
             {
                 EStatType.Space,
-                new List<StatData>
-                {
+                [
                     new StatData(EStatType.Space, "Space_RatherTight", 12.5f),
                     new StatData(EStatType.Space, "Space_AverageSized", 29f),
                     new StatData(EStatType.Space, "Space_SomewhatSpacious", 55f),
                     new StatData(EStatType.Space, "Space_QuiteSpacious", 70f),
                     new StatData(EStatType.Space, "Space_VerySpacious", 130f),
                     new StatData(EStatType.Space, "Space_ExtremelySpacious", 349.5f)
-                }
+                ]
             },
             {
                 EStatType.Beauty,
-                new List<StatData>
-                {
+                [
                     new StatData(EStatType.Beauty, "Beauty_Ugly", -3.5f),
                     new StatData(EStatType.Beauty, "Beauty_Neutral", default(float)),
                     new StatData(EStatType.Beauty, "Beauty_Pretty", 2.4f),
@@ -49,12 +47,11 @@ public class SettingsData : ModSettings
                     new StatData(EStatType.Beauty, "Beauty_VeryBeautiful", 15f),
                     new StatData(EStatType.Beauty, "Beauty_ExtremelyBeautiful", 50f),
                     new StatData(EStatType.Beauty, "Beauty_UnbelievablyBeautiful", 100f)
-                }
+                ]
             },
             {
                 EStatType.Wealth,
-                new List<StatData>
-                {
+                [
                     new StatData(EStatType.Wealth, "Wealth_SomewhatPoor", 500f),
                     new StatData(EStatType.Wealth, "Wealth_Mediocre", 700f),
                     new StatData(EStatType.Wealth, "Wealth_SomewhatRich", 2000f),
@@ -62,12 +59,11 @@ public class SettingsData : ModSettings
                     new StatData(EStatType.Wealth, "Wealth_Luxurious", 10000f),
                     new StatData(EStatType.Wealth, "Wealth_ExtremelyLuxurious", 100000f),
                     new StatData(EStatType.Wealth, "Wealth_UnbelievablyLuxurious", 1000000f)
-                }
+                ]
             },
             {
                 EStatType.Imp,
-                new List<StatData>
-                {
+                [
                     new StatData(EStatType.Imp, "Imp_Dull", 20f),
                     new StatData(EStatType.Imp, "Imp_Mediocre", 30f),
                     new StatData(EStatType.Imp, "Imp_Decent", 40f),
@@ -77,17 +73,16 @@ public class SettingsData : ModSettings
                     new StatData(EStatType.Imp, "Imp_ExtremelyImpressive", 120f),
                     new StatData(EStatType.Imp, "Imp_UnbelievablyImpressive", 170f),
                     new StatData(EStatType.Imp, "Imp_WondrouslyImpressive", 240f)
-                }
+                ]
             },
             {
                 EStatType.Clean,
-                new List<StatData>
-                {
+                [
                     new StatData(EStatType.Clean, "Clean_Dirty", -1.1f),
                     new StatData(EStatType.Clean, "Clean_SlightlyDirty", -0.4f),
                     new StatData(EStatType.Clean, "Clean_Clean", -0.05f),
                     new StatData(EStatType.Clean, "Clean_Sterile", 0.4f)
-                }
+                ]
             }
         };
         AddPreset(EStatType.Space, 6f, 12f, 28f, 45f, 75f, 175f);

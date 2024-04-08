@@ -12,9 +12,9 @@ public class TableField : TableEntity
         Update();
     }
 
-    public TableColumn Column { get; private set; }
+    public TableColumn Column { get; }
 
-    public TableRow Row { get; private set; }
+    public TableRow Row { get; }
 
     public static TableField Invalid => new TableField(null, null, null);
 

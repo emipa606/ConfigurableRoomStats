@@ -55,9 +55,9 @@ public class TableData
         }
     }
 
-    public List<TableColumn> Columns { get; set; } = new List<TableColumn>();
+    public List<TableColumn> Columns { get; } = [];
 
-    public List<TableRow> Rows { get; set; } = new List<TableRow>();
+    public List<TableRow> Rows { get; } = [];
 
     public Rect TableRect { get; private set; } = Rect.zero;
 
@@ -211,28 +211,8 @@ public class TableData
         return Rows.Count <= 0 ? 32f : Rows.Last().Height;
     }
 
-    public Rect GetRowRect(int rowIdx)
-    {
-        CreateRowsUntil(rowIdx);
-        return Rows[rowIdx].Rect;
-    }
-
-    public Rect GetHeaderRect(int colIdx)
-    {
-        return GetField(colIdx, 0).Rect;
-    }
-
     public Rect GetFieldRect(int colIdx, int rowIdx)
     {
         return GetField(colIdx, rowIdx).Rect;
-    }
-
-    public void ApplyMouseOverEntireRow(int rowIdx)
-    {
-        var rowRect = GetRowRect(rowIdx);
-        if (Mouse.IsOver(rowRect))
-        {
-            Widgets.DrawHighlight(rowRect);
-        }
     }
 }
