@@ -7,97 +7,67 @@ namespace SquirtingElephant.Helpers;
 
 public class TableData
 {
-    private const float DEFAULT_ROW_HEIGHT = 32f;
+    private const float DefaultRowHeight = 32f;
 
-    public readonly bool UpdateEnabled = true;
+    private const bool UpdateEnabled = true;
 
-    private Vector2 _Spacing;
-
-    private Vector2 _TableOffset;
-
-    private bool PrivateUpdateEnabled = true;
+    private bool privateUpdateEnabled = true;
 
     public TableData(Vector2 tableOffset, Vector2 spacing, float[] colWidths, float[] rowHeights, int colCount = -1,
         int rowCount = -1)
     {
-        Initialize(tableOffset, spacing, colWidths, rowHeights, colCount, rowCount);
+        initialize(tableOffset, spacing, colWidths, rowHeights, colCount, rowCount);
     }
 
     public float Bottom => TableRect.yMax;
 
-    public Vector2 Spacing
-    {
-        get => _Spacing;
-        set
-        {
-            if (value == _Spacing)
-            {
-                return;
-            }
+    private Vector2 Spacing { get; set; }
 
-            _Spacing = value;
-            Update();
-        }
-    }
-
-    public Vector2 TableOffset
-    {
-        get => _TableOffset;
-        set
-        {
-            if (value == _TableOffset)
-            {
-                return;
-            }
-
-            _TableOffset = value;
-            Update();
-        }
-    }
+    private Vector2 TableOffset { get; set; }
 
     public List<TableColumn> Columns { get; } = [];
 
-    public List<TableRow> Rows { get; } = [];
+    private List<TableRow> Rows { get; } = [];
 
-    public Rect TableRect { get; private set; } = Rect.zero;
+    private Rect TableRect { get; set; } = Rect.zero;
 
-    private void Initialize(Vector2 tableOffset, Vector2 tableSpacing, float[] colWidths, float[] rowHeights,
+    private void initialize(Vector2 tableOffset, Vector2 tableSpacing, float[] colWidths, float[] rowHeights,
         int colCount = -1, int rowCount = -1)
     {
-        PrivateUpdateEnabled = false;
-        _TableOffset = tableOffset;
-        _Spacing = tableSpacing;
+        privateUpdateEnabled = false;
+        TableOffset = tableOffset;
+        Spacing = tableSpacing;
         var array = colWidths;
         foreach (var colWidth in array)
         {
-            AddColumns(colWidth);
+            addColumns(colWidth);
         }
 
-        AddColumns(colWidths.Last(), colCount - colWidths.Length);
+        addColumns(colWidths.Last(), colCount - colWidths.Length);
         array = rowHeights;
         foreach (var rowHeight in array)
         {
-            AddRow(rowHeight);
+            addRow(rowHeight);
         }
 
-        AddRow(GetLastRowHeight(), rowCount - Rows.Count);
-        PrivateUpdateEnabled = true;
+        addRow(getLastRowHeight(), rowCount - Rows.Count);
+        privateUpdateEnabled = true;
         Update();
     }
 
     public void Update(bool force = false)
     {
-        if ((!UpdateEnabled || !PrivateUpdateEnabled) && !force)
+        if ((!UpdateEnabled || !privateUpdateEnabled) && !force)
         {
             return;
         }
 
-        SetTableRect();
-        UpdateColumns();
-        UpdateRowsAndFields();
+        setTableRect();
+        updateColumns();
+        updateRowsAndFields();
     }
 
-    private float CalcTableWidth()
+    private float calcTableWidth()
     {
         if (Columns.Count == 0)
         {
@@ -113,7 +83,7 @@ public class TableData
         return num;
     }
 
-    private float CalcTableHeight()
+    private float calcTableHeight()
     {
         if (Rows.Count == 0)
         {
@@ -129,12 +99,12 @@ public class TableData
         return num;
     }
 
-    private void SetTableRect()
+    private void setTableRect()
     {
-        TableRect = new Rect(TableOffset.x, TableOffset.y, CalcTableWidth(), CalcTableHeight());
+        TableRect = new Rect(TableOffset.x, TableOffset.y, calcTableWidth(), calcTableHeight());
     }
 
-    public void UpdateColumns()
+    private void updateColumns()
     {
         var x = TableRect.x;
         foreach (var column in Columns)
@@ -144,7 +114,7 @@ public class TableData
         }
     }
 
-    public void UpdateRowsAndFields()
+    private void updateRowsAndFields()
     {
         var y = TableRect.y;
         foreach (var row in Rows)
@@ -155,46 +125,46 @@ public class TableData
         }
     }
 
-    public void AddRow(float rowHeight, int amount = 1)
+    private void addRow(float rowHeight, int amount = 1)
     {
         if (amount == 0)
         {
             return;
         }
 
-        PrivateUpdateEnabled = false;
+        privateUpdateEnabled = false;
         for (var i = 0; i < amount; i++)
         {
             Rows.Add(new TableRow(this, rowHeight));
         }
 
-        PrivateUpdateEnabled = true;
+        privateUpdateEnabled = true;
         Update();
     }
 
-    private void AddColumns(float colWidth, float amount = 1f)
+    private void addColumns(float colWidth, float amount = 1f)
     {
         if (amount == 0f)
         {
             return;
         }
 
-        PrivateUpdateEnabled = false;
+        privateUpdateEnabled = false;
         for (var i = 0; i < amount; i++)
         {
             Columns.Add(new TableColumn(this, colWidth));
         }
 
-        PrivateUpdateEnabled = true;
+        privateUpdateEnabled = true;
         Update();
     }
 
-    private void CreateRowsUntil(int rowIdx)
+    private void createRowsUntil(int rowIdx)
     {
-        AddRow(GetLastRowHeight(), rowIdx + 1 - Rows.Count);
+        addRow(getLastRowHeight(), rowIdx + 1 - Rows.Count);
     }
 
-    public TableField GetField(int colIdx, int rowIdx)
+    private TableField getField(int colIdx, int rowIdx)
     {
         if (colIdx >= Columns.Count)
         {
@@ -202,17 +172,17 @@ public class TableData
             return TableField.Invalid;
         }
 
-        CreateRowsUntil(rowIdx);
+        createRowsUntil(rowIdx);
         return Rows[rowIdx].Fields[colIdx];
     }
 
-    private float GetLastRowHeight()
+    private float getLastRowHeight()
     {
         return Rows.Count <= 0 ? 32f : Rows.Last().Height;
     }
 
     public Rect GetFieldRect(int colIdx, int rowIdx)
     {
-        return GetField(colIdx, rowIdx).Rect;
+        return getField(colIdx, rowIdx).Rect;
     }
 }

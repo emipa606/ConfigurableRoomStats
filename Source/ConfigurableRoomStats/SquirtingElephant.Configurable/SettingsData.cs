@@ -7,7 +7,7 @@ public class SettingsData : ModSettings
 {
     public Dictionary<EStatType, List<StatData>> StatData;
 
-    private void AddPreset(EStatType statType, params float[] values)
+    private void addPreset(EStatType statType, params float[] values)
     {
         if (values.Length != StatData[statType].Count)
         {
@@ -17,7 +17,7 @@ public class SettingsData : ModSettings
 
         for (var i = 0; i < StatData[statType].Count; i++)
         {
-            var item = i < values.Length ? values[i] : values[values.Length - 1];
+            var item = i < values.Length ? values[i] : values[^1];
             StatData[statType][i].Presets.Add(item);
         }
     }
@@ -41,7 +41,7 @@ public class SettingsData : ModSettings
                 EStatType.Beauty,
                 [
                     new StatData(EStatType.Beauty, "Beauty_Ugly", -3.5f),
-                    new StatData(EStatType.Beauty, "Beauty_Neutral", default(float)),
+                    new StatData(EStatType.Beauty, "Beauty_Neutral", 0),
                     new StatData(EStatType.Beauty, "Beauty_Pretty", 2.4f),
                     new StatData(EStatType.Beauty, "Beauty_Beautiful", 5f),
                     new StatData(EStatType.Beauty, "Beauty_VeryBeautiful", 15f),
@@ -85,7 +85,7 @@ public class SettingsData : ModSettings
                 ]
             }
         };
-        AddPreset(EStatType.Space, 6f, 12f, 28f, 45f, 75f, 175f);
+        addPreset(EStatType.Space, 6f, 12f, 28f, 45f, 75f, 175f);
         foreach (var statDatum in StatData)
         {
             foreach (var item in statDatum.Value)

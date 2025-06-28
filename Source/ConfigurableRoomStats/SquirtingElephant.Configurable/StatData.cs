@@ -6,7 +6,7 @@ namespace SquirtingElephant.ConfigurableRoomStats;
 
 public class StatData : IExposable
 {
-    private static readonly List<(float, float)> MinMaxConsts =
+    private static readonly List<(float, float)> minMaxConsts =
     [
         (2f, 2500f),
         (-1000f, 1000f),
@@ -21,9 +21,9 @@ public class StatData : IExposable
 
     public readonly List<float> Presets;
 
-    public float CustomPreset1;
+    private float customPreset1;
 
-    public float CustomPreset2;
+    private float customPreset2;
 
     public float Value;
 
@@ -33,9 +33,9 @@ public class StatData : IExposable
         TranslationKey = $"SECRS_{translationKeyNoPrefix}";
         Value = presets[0];
         Presets = presets.ToList();
-        CustomPreset1 = CustomPreset2 = Presets[0];
-        MinValue = MinMaxConsts[(int)StatType].Item1;
-        MaxValue = MinMaxConsts[(int)StatType].Item2;
+        customPreset1 = customPreset2 = Presets[0];
+        MinValue = minMaxConsts[(int)StatType].Item1;
+        MaxValue = minMaxConsts[(int)StatType].Item2;
     }
 
     public EStatType StatType { get; }
@@ -45,8 +45,8 @@ public class StatData : IExposable
     public void ExposeData()
     {
         Scribe_Values.Look(ref Value, $"{TranslationKey}_Value", Presets[0], true);
-        Scribe_Values.Look(ref CustomPreset1, $"{TranslationKey}_CustomPreset1", Presets[0], true);
-        Scribe_Values.Look(ref CustomPreset2, $"{TranslationKey}_CustomPreset2", Presets[0], true);
+        Scribe_Values.Look(ref customPreset1, $"{TranslationKey}_CustomPreset1", Presets[0], true);
+        Scribe_Values.Look(ref customPreset2, $"{TranslationKey}_CustomPreset2", Presets[0], true);
     }
 
     public void CreateDefaultPresets()
@@ -57,10 +57,10 @@ public class StatData : IExposable
 
     public void DuplicateVanillaPreset()
     {
-        DuplicatePreset(0);
+        duplicatePreset(0);
     }
 
-    public void DuplicatePreset(int presetIdx)
+    private void duplicatePreset(int presetIdx)
     {
         Presets.Add(Presets[presetIdx]);
     }
@@ -73,10 +73,10 @@ public class StatData : IExposable
                 Value = Presets[preset];
                 break;
             case 4:
-                Value = CustomPreset1;
+                Value = customPreset1;
                 break;
             default:
-                Value = CustomPreset2;
+                Value = customPreset2;
                 break;
         }
     }
@@ -90,11 +90,11 @@ public class StatData : IExposable
     {
         if (customPresetNumber == 1)
         {
-            CustomPreset1 = Value;
+            customPreset1 = Value;
         }
         else
         {
-            CustomPreset2 = Value;
+            customPreset2 = Value;
         }
     }
 }

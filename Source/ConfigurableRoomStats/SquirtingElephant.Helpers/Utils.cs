@@ -7,7 +7,7 @@ namespace SquirtingElephant.Helpers;
 
 public static class Utils
 {
-    public static void LogDefNotFoundError(string defName, string defType = "Def")
+    private static void logDefNotFoundError(string defName, string defType = "Def")
     {
         Log.Error(
             $"Unable to find {defType}: {defName}. Please ensure that this def exists in the database and that the database was loaded before trying to locate this.");
@@ -23,7 +23,7 @@ public static class Utils
 
         if (errorOnNotFound)
         {
-            LogDefNotFoundError(recipeDefName, typeof(T).Name);
+            logDefNotFoundError(recipeDefName, typeof(T).Name);
         }
 
         return null;
